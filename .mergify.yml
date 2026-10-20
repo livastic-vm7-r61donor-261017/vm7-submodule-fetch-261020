@@ -1,0 +1,21 @@
+queue_rules:
+  - name: vm7-submodule-fetch-261020
+    queue_conditions: []
+    merge_conditions: []
+    batch_size: 2
+    merge_method: merge-batch
+
+merge_queue:
+  mode: serial
+  max_parallel_checks: 1
+  status_comments: all
+
+pull_request_rules:
+  - name: controlled auto queue for submodule screen
+    conditions:
+      - author = livastic-vm7-r61donor-261017
+      - base = main
+      - title ~= ^VM7_SUBMODULE_
+    actions:
+      queue:
+        name: vm7-submodule-fetch-261020
